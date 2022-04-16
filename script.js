@@ -46,9 +46,38 @@ window.addEventListener("load", () => {
 </section>`;
 
   const bookList = document.getElementById("book-list");
+  const form = document.getElementById("add-book");
+  const contact = document.getElementById("contact");
   const title = document.getElementById("title");
   const author = document.getElementById("author");
   const addBtn = document.getElementById("add");
+  const navItems = document.querySelectorAll("li");
+
+  navItems.forEach((item) =>
+    item.addEventListener("click", (e) => {
+      navigate(e);
+    })
+  );
+
+  const navigate = (e) => {
+    switch (e.target.parentElement.id) {
+      case "item-1":
+        bookList.style.display = "block";
+        form.style.display = "none";
+        contact.style.display = "none";
+        break;
+      case "item-2":
+        form.style.display = "block";
+        contact.style.display = "none";
+        bookList.style.display = "none";
+        break;
+      case "item-3":
+        contact.style.display = "block";
+        form.style.display = "none";
+        bookList.style.display = "none";
+        break;
+    }
+  };
 
   class Library {
     constructor() {

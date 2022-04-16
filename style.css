@@ -12,7 +12,7 @@ body::before {
   background: url("./background.jpg");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 22% 0;
+  background-position: 20% 0;
   content: '';
   z-index: -1;
   position: absolute;
@@ -24,4 +24,44 @@ body::before {
   -webkit-filter: blur(10px);
 }
 
+a {
+  text-decoration: none;
+  color: rgb(3, 182, 3);
+}
 
+a:focus {
+  color: lime;
+  text-shadow: 0 0 8px yellow;
+}
+
+header {
+  width: 100%;
+  background: rgb(33, 33, 34);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+nav > ul {
+  display: flex;
+  gap: 20px;
+}
+
+nav > ul > li {
+  list-style: none;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+#book-list, #contact {
+  display: none;
+}
+
+main {
+  border: solid white;
+  
+}
