@@ -3,18 +3,6 @@ import Book from "./book.js";
 window.addEventListener("load", () => {
   const listItems = ["Books", "Add Book", "Contact"];
 
-  const header = document.querySelector("header");
-  header.innerHTML = `<h1><a href="#">My Programming Books</a></h1><nav><ul></ul></nav>`;
-  const navUl = document.querySelector("ul");
-
-  /* Create navbar list items */
-  for (let i = 0; i < 3; i++) {
-    const li = document.createElement("li");
-    li.setAttribute("id", `item-${i + 1}`);
-    li.innerHTML = `<a href="#">${listItems[i]}</a>`;
-    navUl.appendChild(li);
-  }
-
   const main = document.querySelector("main");
   main.innerHTML = `<section id="book-list">
 </section>
@@ -27,23 +15,42 @@ window.addEventListener("load", () => {
 </section>
 <section id="contact">
   <h3>
-    Github:<a href="https://github.com/virag-ky" target="_blank"
+    Github: <a href="https://github.com/virag-ky" target="_blank"
       >@virag-ky</a
-    >
+    > 
   </h3>
   <h3>
-    Twitter:<a href="https://twitter.com/Virag_Ky" target="_blank"
+    Twitter: <a href="https://twitter.com/Virag_Ky" target="_blank"
       >@Virag_Ky</a
     >
   </h3>
   <h3>
-    LinkedIn:<a
+    LinkedIn: <a
       href="https://www.linkedin.com/in/virag-kormoczy/"
       target="_blank"
       >virag-kormoczy</a
     >
   </h3>
 </section>`;
+
+  const header = document.querySelector("header");
+  header.innerHTML = `<h1><a href="#">My Programming Books</a></h1><nav><ul></ul></nav>`;
+  const navUl = document.querySelector("ul");
+
+  const h1 = document.querySelector("h1");
+  h1.addEventListener("click", () => {
+    bookList.style.display = "block";
+    form.style.display = "none";
+    contact.style.display = "none";
+  });
+
+  /* Create navbar list items */
+  for (let i = 0; i < 3; i++) {
+    const li = document.createElement("li");
+    li.setAttribute("id", `item-${i + 1}`);
+    li.innerHTML = `<a href="#">${listItems[i]}</a>`;
+    navUl.appendChild(li);
+  }
 
   const bookList = document.getElementById("book-list");
   const form = document.getElementById("add-book");
@@ -96,7 +103,7 @@ window.addEventListener("load", () => {
       for (let i = 0; i < this.library.length; i += 1) {
         const bookContainer = document.createElement("div");
         bookContainer.setAttribute("class", "book");
-        bookContainer.innerHTML = `<img src="" alt="book" />
+        bookContainer.innerHTML = `
         <h2>${this.library[i].title}</h2>
         <h3>${this.library[i].author}</h3>
         <div class="read">
