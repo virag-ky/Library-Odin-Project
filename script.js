@@ -1,3 +1,5 @@
+import Book from "./book.js";
+
 window.addEventListener("load", () => {
   const listItems = ["Books", "Add Book", "Contact"];
 
@@ -15,27 +17,6 @@ window.addEventListener("load", () => {
 
   const main = document.querySelector("main");
   main.innerHTML = `<section id="book-list">
-  <div class="book">
-    <img
-      src="the-pragmatic-programmer.jpeg"
-      alt="the pragmatic programmer book"
-    />
-    <h2>The Pragmatic Programmer</h2>
-    <h3>By David Thomas & Andrew Hunt</h3>
-    <div class="read">
-      <input type="checkbox" />
-      <h4>Read</h4>
-    </div>
-  </div>
-  <div class="book">
-    <img src="clean-code.jpeg" alt="clean code book" />
-    <h2>Clean Code</h2>
-    <h3>By Robert C. Martin</h3>
-    <div class="read">
-      <input type="checkbox" />
-      <h4>Read</h4>
-    </div>
-  </div>
 </section>
 <section id="add-book">
   <form action="#">
@@ -64,26 +45,65 @@ window.addEventListener("load", () => {
   </h3>
 </section>`;
 
-  const myLibrary = JSON.parse(localStorage.getItem("list")) || [];
-
   const bookList = document.getElementById("book-list");
   const title = document.getElementById("title");
   const author = document.getElementById("author");
   const addBtn = document.getElementById("add");
-  const regex = /^\s+$/;
 
-  const createBook = (title, author) => {
-    const object = {};
-    object.title = title.value;
-    object.author = author.value;
+  class Library {
+    constructor() {
+      this.library = JSON.parse(localStorage.getItem("list")) || [];
+    }
 
-    myLibrary.push(object);
-    console.log(myLibrary);
+    addBook(title, author) {
+      const selectedBook = new Book(title.value, author.value);
+      this.library.push(selectedBook);
+      this.createBook();
+    }
 
+    createBook() {
+      bookList.innerHTML = "";
+
+      for (let i = 0; i < this.library.length; i += 1) {
+        const bookContainer = document.createElement("div");
+        bookContainer.setAttribute("class", "book");
+        bookContainer.innerHTML = `<img src="" alt="book" />
+        <h2>${this.library[i].title}</h2>
+        <h3>${this.library[i].author}</h3>
+        <div class="read">
+          <input type="checkbox" />
+          <h4>Read</h4>
+        </div>
+        <button data-button="${i}">Delete</button>`;
+        bookList.appendChild(bookContainer);
+      }
+      this.deleteBook();
+    }
+
+    deleteBook() {
+      [...document.querySelectorAll("button")].forEach((button) => {
+        const buttonIndex = parseInt(button.getAttribute("data"), 10);
+        button.addEventListener("click", () => {
+          this.library.splice(buttonIndex, 1);
+          localStorage.setItem("list", JSON.stringify(this.library));
+          this.createBook();
+        });
+      });
+    }
+  }
+
+  const myLibrary = new Library();
+
+  myLibrary.createBook();
+
+  addBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (title.value === "" || author.value === "") {
+      return;
+    }
+    myLibrary.addBook(title, author);
+    localStorage.setItem("list", JSON.stringify(myLibrary.library));
     title.value = "";
     author.value = "";
-  };
-  addBtn.addEventListener("click", () => {
-    createBook(title, author);
   });
 });
