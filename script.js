@@ -88,7 +88,7 @@ window.addEventListener("load", () => {
 
   class Library {
     constructor() {
-      this.library = JSON.parse(localStorage.getItem("list")) || [];
+      this.library = JSON.parse(localStorage.getItem("booklist")) || [];
     }
 
     addBook(title, author) {
@@ -121,7 +121,7 @@ window.addEventListener("load", () => {
         const buttonIndex = parseInt(button.getAttribute("data"), 10);
         button.addEventListener("click", () => {
           this.library.splice(buttonIndex, 1);
-          localStorage.setItem("list", JSON.stringify(this.library));
+          localStorage.setItem("booklist", JSON.stringify(this.library));
           this.createBook();
         });
       });
@@ -138,7 +138,7 @@ window.addEventListener("load", () => {
       return;
     }
     myLibrary.addBook(title, author);
-    localStorage.setItem("list", JSON.stringify(myLibrary.library));
+    localStorage.setItem("booklist", JSON.stringify(myLibrary.library));
     title.value = "";
     author.value = "";
   });
